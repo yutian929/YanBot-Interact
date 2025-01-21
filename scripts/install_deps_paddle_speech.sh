@@ -43,3 +43,12 @@ echo "2. Access Jupyter Lab:"
 echo "   http://localhost:8888/lab"
 echo "3. Verify GPU support (for GPU image):"
 echo "   docker exec paddlespeech python -c \"import paddle; print(paddle.is_compiled_with_cuda())\""
+
+# docker run --gpus all -it --net=host --privileged \
+# -v /tmp/.X11-unix:/tmp/.X11-unix \
+# -v "${PWD}":/home/appuser/Grounded-SAM-2 \
+# -e DISPLAY=$DISPLAY \
+# -e ROS_MASTER_URI=http://localhost:11311 \
+# -e ROS_IP=$(shell hostname -I | awk '{print $$1}') \
+# --name=gsa \
+# --ipc=host -it grounded_sam2:1.0

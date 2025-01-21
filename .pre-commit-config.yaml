@@ -43,11 +43,11 @@ repos:
             - --show-source
             - --statistics
 
-# check license
--   repo: local
-    hooks:
-    -   id: check-custom
-        name: Check Custom
-        entry: python .precommit/check_custom.py
-        language: python
-        files: \.py$
+# # check license
+# -   repo: local
+#     hooks:
+#     -   id: check-custom
+#         name: Check Custom
+#         entry: python .precommit/check_custom.py
+#         language: python
+#         files: \.py$

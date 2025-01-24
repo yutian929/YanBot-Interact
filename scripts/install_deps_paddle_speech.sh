@@ -5,6 +5,12 @@ IMAGE_REPO="paddlecloud/paddlespeech"
 GPU_IMAGE_TAG="develop-gpu-cuda11.2-cudnn8-fb4d25"  # CUDA 11.2 image
 CPU_IMAGE_TAG="develop-cpu-fb4d25"                  # CPU image
 
+# Function to check image existence
+image_exists() {
+    sudo docker images -q "${IMAGE_REPO}:${IMAGE_TAG}" | grep -q .
+    return $?
+}
+
 # Detect GPU
 if command -v nvidia-smi &> /dev/null && nvidia-smi &> /dev/null; then
     echo "[INFO] Detected NVIDIA GPU, using GPU image"
@@ -16,15 +22,40 @@ else
     GPU_FLAG=""
 fi
 
-# Auto-pull image
-echo -e "\n[STEP 1/2] Pulling Docker image: ${IMAGE_REPO}:${IMAGE_TAG}"
-sudo docker pull ${IMAGE_REPO}:${IMAGE_TAG} || { echo "[ERROR] Pull failed"; exit 1; }
+# Check local image
+echo -e "\n[STEP 1/2] Checking local image..."
+if image_exists; then
+    echo "[INFO] Found local image: ${IMAGE_REPO}:${IMAGE_TAG}"
+    PULL_NEEDED=false
+else
+    echo "[INFO] Local image not found, will pull from registry"
+    PULL_NEEDED=true
+fi
 
-# Generate run command
-RUN_CMD="docker run -it --rm --name paddlespeech_ros --network=host -v /tmp/.X11-unix:/tmp/.X11-unix -v \$(pwd):/workspace -e ROS_MASTER_URI=http://${HOST_IP}:11311 -e ROS_HOSTNAME=\$(hostname -I | awk '{print \$1}') --device /dev/snd ${GPU_FLAG} ${IMAGE_REPO}:${IMAGE_TAG} /bin/bash "
+# Pull image if needed
+if $PULL_NEEDED; then
+    echo -e "\n[PULL] Pulling Docker image: ${IMAGE_REPO}:${IMAGE_TAG}"
+    sudo docker pull ${IMAGE_REPO}:${IMAGE_TAG} || { 
+        echo "[ERROR] Pull failed"
+        exit 1
+    }
+else
+    echo -e "\n[SKIP] Using existing local image"
+fi
+
+# Generate run command (根据官方运行示例调整)
+RUN_CMD="sudo docker run -it \\
+    --name paddlespeech_dev \\
+    ${RUNTIME_FLAG} \\
+    -v \$(pwd):/mnt \\  # 挂载目录改为/mnt
+    -p 8888:8888 \\     # 保留端口映射
+    ${IMAGE_REPO}:${IMAGE_TAG} \\
+    /bin/bash"
 
 # Print instructions
 echo -e "\n[STEP 2/2] Run the container with:"
 echo -e "\n\033[32m${RUN_CMD}\033[0m"
 echo -e "\nAfter running, access the container with:"
-echo "   docker exec -it paddlespeech_ros /bin/bash"
+echo "   sudo docker exec -it paddlespeech_dev /bin/bash"
+echo -e "\nTo verify GPU support:"
+echo "   sudo docker exec paddlespeech_dev python -c \"import paddle; print(paddle.is_compiled_with_cuda())\""

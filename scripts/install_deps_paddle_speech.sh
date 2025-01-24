@@ -46,7 +46,7 @@ fi
 # Generate run command (根据官方运行示例调整)
 RUN_CMD="sudo docker run -it \\
     --name paddlespeech_dev \\
-    ${RUNTIME_FLAG} \\
+    ${GPU_FLAG} \\
     -v \$(pwd):/mnt \\  # 挂载目录改为/mnt
     -p 8888:8888 \\     # 保留端口映射
     ${IMAGE_REPO}:${IMAGE_TAG} \\

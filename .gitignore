@@ -2,3 +2,4 @@ src/wakeup/snowboy/
 
 src/stt/paddle_speech/en.wav
 src/stt/paddle_speech/zh.wav
+src/tts/paddle_speech/output.wav

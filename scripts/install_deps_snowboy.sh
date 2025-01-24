@@ -18,4 +18,10 @@ else
     git clone https://github.com/yutian929/YanBot-Interact_snowboy.git snowboy
     check_success
 fi
+
+cd snowboy/
+bash scripts/install_deps_python3.sh
+check_success
+cd ..
+
 cd ../../

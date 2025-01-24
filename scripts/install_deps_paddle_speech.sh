@@ -16,39 +16,15 @@ else
     GPU_FLAG=""
 fi
 
-# Auto-pull the image
-echo -e "\n[STEP 1/2] Pulling Docker image..."
-sudo docker pull ${IMAGE_REPO}:${IMAGE_TAG}
-
-if [ $? -ne 0 ]; then
-    echo -e "\n[ERROR] Failed to pull the image. Check your network connection or image tag."
-    exit 1
-fi
+# Auto-pull image
+echo -e "\n[STEP 1/2] Pulling Docker image: ${IMAGE_REPO}:${IMAGE_TAG}"
+sudo docker pull ${IMAGE_REPO}:${IMAGE_TAG} || { echo "[ERROR] Pull failed"; exit 1; }
 
 # Generate run command
-RUN_CMD="docker run -d --name paddlespeech \\
-    ${GPU_FLAG} \\
-    -v \$(pwd):/workspace \\
-    -p 8888:8888 \\
-    ${IMAGE_REPO}:${IMAGE_TAG} \\
-    jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --notebook-dir=/workspace"
+RUN_CMD="docker run -it --rm --name paddlespeech_ros --network=host -v /tmp/.X11-unix:/tmp/.X11-unix -v \$(pwd):/workspace -e ROS_MASTER_URI=http://${HOST_IP}:11311 -e ROS_HOSTNAME=\$(hostname -I | awk '{print \$1}') --device /dev/snd ${GPU_FLAG} ${IMAGE_REPO}:${IMAGE_TAG} /bin/bash "
 
-# Print next steps
-echo -e "\n[STEP 2/2] Image pulled successfully! Run the container with:"
+# Print instructions
+echo -e "\n[STEP 2/2] Run the container with:"
 echo -e "\n\033[32m${RUN_CMD}\033[0m"
-echo -e "\nAfter running the container:"
-echo "1. Get Jupyter token:"
-echo "   docker exec paddlespeech jupyter server list"
-echo "2. Access Jupyter Lab:"
-echo "   http://localhost:8888/lab"
-echo "3. Verify GPU support (for GPU image):"
-echo "   docker exec paddlespeech python -c \"import paddle; print(paddle.is_compiled_with_cuda())\""
-
-# docker run --gpus all -it --net=host --privileged \
-# -v /tmp/.X11-unix:/tmp/.X11-unix \
-# -v "${PWD}":/home/appuser/Grounded-SAM-2 \
-# -e DISPLAY=$DISPLAY \
-# -e ROS_MASTER_URI=http://localhost:11311 \
-# -e ROS_IP=$(shell hostname -I | awk '{print $$1}') \
-# --name=gsa \
-# --ipc=host -it grounded_sam2:1.0
+echo -e "\nAfter running, access the container with:"
+echo "   docker exec -it paddlespeech_ros /bin/bash"

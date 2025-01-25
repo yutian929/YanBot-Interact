@@ -1,4 +1,2 @@
 src/wakeup/snowboy/
-
-src/stt/paddle_speech/*.wav
-src/tts/paddle_speech/*.wav
+*.wav

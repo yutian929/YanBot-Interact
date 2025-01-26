@@ -38,7 +38,8 @@ https://hub.docker.com/r/paddlecloud/paddlespeech/tags
 ```bash
 # at YanBot-Interact/
 bash scripts/install_deps_paddle_speech.sh
+rosrun stt_pkg client_paddle_speech.py
 # at docker: /mnt/
 bash scripts/install_deps_docker_paddle_speech.sh
-python src/stt/stt_pkg/scripts/server.py
+source scripts/run_stt_docker_paddle_speech.sh
 ```

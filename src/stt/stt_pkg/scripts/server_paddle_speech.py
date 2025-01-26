@@ -37,4 +37,8 @@ def handle_query():
 
 
 if __name__ == "__main__":
+    # 预热
+    file = get_normalized_path(f"../../../../yutian.wav")
+    result = asr(file)
+    print(f"预热完成,识别结果为:{result}")
     app.run(host="0.0.0.0", port=8888)  # 必须绑定到 0.0.0.0

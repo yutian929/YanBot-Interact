@@ -1,5 +1,6 @@
 src/wakeup/snowboy/
 *.wav
+!yutian.wav
 
 devel/
 build/

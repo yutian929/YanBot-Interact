@@ -8,8 +8,8 @@ check_success() {
     fi
 }
 
-mkdir -p src/wakeup/
-cd src/wakeup/
+mkdir -p src/wakeup/wakeup_pkg/scripts/
+cd src/wakeup/wakeup_pkg/scripts/
 
 if [ -d "snowboy" ]; then
     echo "snowboy directory already exists. Skipping clone."
@@ -24,4 +24,4 @@ bash scripts/install_deps_python3.sh
 check_success
 cd ..
 
-cd ../../
+cd ../../../../

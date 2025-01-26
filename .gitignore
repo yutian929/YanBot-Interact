@@ -1,4 +1,4 @@
-src/wakeup/snowboy/
+src/wakeup/wakeup_pkg/scripts/snowboy/
 *.wav
 !yutian.wav
 

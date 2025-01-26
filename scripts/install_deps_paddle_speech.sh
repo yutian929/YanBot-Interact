@@ -44,13 +44,7 @@ else
 fi
 
 # Generate run command (根据官方运行示例调整)
-RUN_CMD="sudo docker run -it \\
-    --name paddlespeech_dev \\
-    ${GPU_FLAG} \\
-    -v \$(pwd):/mnt \\  # 挂载目录改为/mnt
-    -p 8888:8888 \\     # 保留端口映射
-    ${IMAGE_REPO}:${IMAGE_TAG} \\
-    /bin/bash"
+RUN_CMD="sudo docker run -it --name paddlespeech_dev ${GPU_FLAG} --net=host -v \$(pwd):/mnt -p 8888:8888 -p 8889:8889 ${IMAGE_REPO}:${IMAGE_TAG} /bin/bash"
 
 # Print instructions
 echo -e "\n[STEP 2/2] Run the container with:"

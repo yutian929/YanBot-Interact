@@ -5,6 +5,7 @@ Interaction Part of YanBot.
 bash scripts/install_deps_basic.sh
 ```
 
+## wakeup
 
 ### snowboy
 
@@ -14,6 +15,8 @@ bash scripts/install_deps_snowboy.sh
 # at wakeup/snowboy/
 python examples/Python3/demo.py resources/models/nihaoyanyan.pmdl
 ```
+
+## stt
 
 ### paddle_speech
 
@@ -35,6 +38,7 @@ https://hub.docker.com/r/paddlecloud/paddlespeech/tags
 ```bash
 # at YanBot-Interact/
 bash scripts/install_deps_paddle_speech.sh
-# at docker: /workspace/
-
+# at docker: /mnt/
+bash scripts/install_deps_docker_paddle_speech.sh
+python src/stt/stt_pkg/scripts/server.py
 ```

@@ -6,11 +6,11 @@ from stt_msgs.srv import STT, STTRequest
 
 def test_service():
     # 等待服务可用
-    rospy.wait_for_service("/srv_paddle_speech_stt")
+    rospy.wait_for_service("/srv_stt")
 
     try:
         # 创建服务代理
-        stt_proxy = rospy.ServiceProxy("/srv_paddle_speech_stt", STT)
+        stt_proxy = rospy.ServiceProxy("/srv_stt", STT)
 
         # 构造请求
         request = STTRequest()

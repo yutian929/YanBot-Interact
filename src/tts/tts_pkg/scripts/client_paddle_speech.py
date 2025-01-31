@@ -27,9 +27,7 @@ def handle_tts(req):
 
 def tts_server():
     rospy.init_node("paddle_speech_tts_server")
-    rospy.Service(
-        "srv_paddle_speech_tts", TTS, handle_tts  # 服务名称  # 服务类型  # 回调函数
-    )
+    rospy.Service("srv_tts", TTS, handle_tts)  # 服务名称  # 服务类型  # 回调函数
     rospy.loginfo("TTS Service Ready.")
     rospy.spin()
 

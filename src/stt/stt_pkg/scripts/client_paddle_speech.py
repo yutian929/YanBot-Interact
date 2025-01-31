@@ -27,9 +27,7 @@ def handle_stt(req):
 
 def stt_server():
     rospy.init_node("paddle_speech_stt_server")
-    rospy.Service(
-        "srv_paddle_speech_stt", STT, handle_stt  # 服务名称  # 服务类型  # 回调函数
-    )
+    rospy.Service("srv_stt", STT, handle_stt)  # 服务名称  # 服务类型  # 回调函数
     rospy.loginfo("STT Service Ready.")
     rospy.spin()
 

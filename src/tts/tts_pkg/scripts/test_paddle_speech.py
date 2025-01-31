@@ -6,11 +6,11 @@ from tts_msgs.srv import TTS, TTSRequest
 
 def test_service():
     # 等待服务可用
-    rospy.wait_for_service("/srv_paddle_speech_tts")
+    rospy.wait_for_service("/srv__tts")
 
     try:
         # 创建服务代理
-        tts_proxy = rospy.ServiceProxy("/srv_paddle_speech_tts", TTS)
+        tts_proxy = rospy.ServiceProxy("/srv__tts", TTS)
 
         # 构造请求
         request = TTSRequest()

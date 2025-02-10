@@ -20,7 +20,7 @@ Comprehensive node, including launch file.
 ```bash
 # YanBot-Interact/
 ## Docker paddlespeech_dev T1: /mnt/
-bash scripts/install_deps_docker_paddle_speech.sh
+bash scripts/install_deps_paddle_speech_in_docker.sh
 source scripts/run_stt_paddle_speech_in_docker.sh
 ## Docker paddlespeech_dev T2: /mnt/
 source scripts/run_tts_paddle_speech_in_docker.sh
@@ -50,7 +50,7 @@ bash scripts/install_deps_paddle_speech.sh
 ## ROS: YanBot-Interact/
 rosrun stt_pkg client_paddle_speech.py
 ## paddlespeech_dev T1: /mnt/
-bash scripts/install_deps_docker_paddle_speech.sh
+bash scripts/install_deps_paddle_speech_in_docker.sh
 source scripts/run_stt_docker_paddle_speech.sh
 ```
 
@@ -63,6 +63,6 @@ bash scripts/install_deps_paddle_speech.sh
 ## ROS: YanBot-Interact/
 rosrun tts_pkg client_paddle_speech.py
 ## paddlespeech_dev T1: /mnt/
-bash scripts/install_deps_docker_paddle_speech.sh
+bash scripts/install_deps_paddle_speech_in_docker.sh
 source scripts/run_stt_docker_paddle_speech.sh
 ```
